@@ -70,7 +70,7 @@ public class shooting : MonoBehaviour
             }
             else
             {
-                Debug.Log(startingLine.forward);
+              
 
              TR.SetPosition(1,startingLine.position + startingLine.forward * 100);
 

@@ -23,6 +23,7 @@ public class siwpeMoves : MonoBehaviour
     }
     public void Swipe()
     {
+        
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began )
         {
             startTouchPosition = Input.GetTouch(0).position;

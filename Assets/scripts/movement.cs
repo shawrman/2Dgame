@@ -10,8 +10,8 @@ public class movement : MonoBehaviour
     public float jetPackForce;
     public float speed;
     public Joystick moveStick;
-    public float moveX;
-    public float moveY;
+    public float limitX = 10;
+
 
     void Start()
     {
@@ -23,15 +23,17 @@ public class movement : MonoBehaviour
     void Update()
     {
         rb.velocity = new Vector2(moveStick.Horizontal * speed,rb.velocity.y);
-        rb.AddForce(new Vector2(0, jetPackForce * moveStick.Vertical), ForceMode2D.Force);
+        if (rb.velocity.y < limitX)
+        {
+            rb.AddForce(new Vector2(0, jetPackForce * moveStick.Vertical), ForceMode2D.Force);
+
+        }
 
         //rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed,rb.velocity.y);
-        if (Input.GetKey(KeyCode.Space) || (moveStick.Vertical > 0.3f))
-        {
-        }
+        
         if (Input.GetKey(KeyCode.DownArrow) || (moveStick.Vertical < -0.3f))
         {
-            rb.velocity = new Vector2(rb.velocity.x, -jetPackForce);
+           // rb.velocity = new Vector2(rb.velocity.x, -jetPackForce);
         }
     }
 }

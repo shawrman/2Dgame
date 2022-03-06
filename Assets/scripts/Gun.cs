@@ -104,6 +104,8 @@ public class Gun : MonoBehaviour
             gameObjectToMove.transform.localRotation  =  Quaternion.Euler(new Vector3(0, 0, 1080 *(counter / duration)));
             yield return null;
         }
+        gameObjectToMove.transform.localRotation  =  Quaternion.Euler(new Vector3(0, 0, 0));
+
         magazine = _magazineSize;
         canShoot = true;
 
