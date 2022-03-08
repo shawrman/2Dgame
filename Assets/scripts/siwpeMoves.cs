@@ -57,11 +57,24 @@ public class siwpeMoves : MonoBehaviour
                 }
             }  
         }
+        if(Input.touchCount> 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        {
+            stopTouch = false;
+        }
     }
 
     private void down()
     {
-        Debug.Log(1);
+        Rigidbody2D rb = this.gameObject.GetComponent<Rigidbody2D>();
+        RaycastHit2D hit = Physics2D.Linecast(transform.position,new Vector2(transform.position.x,transform.position.y - 3), 1 << LayerMask.NameToLayer("ground") );
+     
+      
+        Debug.Log(hit.point);
+        if(!hit)
+        {
+
+            rb.velocity = new Vector2(0f,-20f);
+        }
     }
 
     private void up()
@@ -70,6 +83,17 @@ public class siwpeMoves : MonoBehaviour
 
     private void right()
     {
+        Rigidbody2D rb = this.gameObject.GetComponent<Rigidbody2D>();
+        RaycastHit2D hit = Physics2D.Linecast(transform.position,new Vector2(transform.position.x + 3,transform.position.y), 1 << LayerMask.NameToLayer("ground") );
+     
+      
+        Debug.Log(hit.point);
+        if(!hit)
+        {
+
+            rb.velocity = new Vector2(20f,0f);
+
+        }
     }
 
     private void left()

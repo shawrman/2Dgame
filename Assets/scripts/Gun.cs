@@ -22,18 +22,7 @@ public class Gun : MonoBehaviour
         canShoot = true;
 
     }
-    public Gun(GameObject bullet,float bulletSpeed,int bulletsPerSecond,Sprite sprite,int magazineSize,float reloadTime,float damage)
-    {
-        _bullet = bullet;
-        _bulletSpeed = bulletSpeed;
-        _bulletsPerSeconds = bulletsPerSecond;
-        _damage = damage;
-        _gunSprite = sprite;
-        _magazineSize = magazineSize;
-        _reloadTime = reloadTime;
-        magazine = magazineSize;
-        
-    }
+   
     GameObject _bullet;//done
     GameObject _gunObject;
     float _bulletSpeed;//done

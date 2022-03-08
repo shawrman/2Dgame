@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class shooting : MonoBehaviour 
+public class shooting : NetworkBehaviour 
 {
     [Header("Guns")]
     public GameObject[] Bullet;
@@ -24,6 +25,7 @@ public class shooting : MonoBehaviour
     public LineRenderer TR;
     public Rigidbody2D rb;
     public Transform rbTarget;
+    public GameObject ori;
     public Transform startingLine;
     Gun gunHolder;
     
@@ -36,15 +38,19 @@ public class shooting : MonoBehaviour
 
  
     public float trailDis = 100;
-    public LayerMask lay;
+ 
     RaycastHit2D hit;
     void Start()
     {
         
-      
-        rb = GetComponent<Rigidbody2D>();
-        reloadGunId();
+        if(isLocalPlayer)
+        {
+            shootStick = GameObject.Find("shoting").GetComponent<FloatingJoystick>();      
+            //rb = GetComponent<Rigidbody2D>();
+            reloadGunId();
 
+        }
+      
     }
     void reloadGunId(int id = 0)
     {
@@ -59,42 +65,61 @@ public class shooting : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
+        if(isLocalPlayer)
+        {
+            handleLine();
+        }
+       
+    }
+    void Update()
+    {
+        if(isLocalPlayer)
+        {
+            handleShoting();
+        }
+  
+        //Instantiate(bulletPreFab,transform,)
+    }
+    void handleLine()
+    {
         TR.SetPosition(0, startingLine.position);
 
-        if (Mathf.Abs(shootStick.Vertical) > 0.1f || Mathf.Abs(shootStick.Horizontal) > 0.1f)
-        {
-            hit = Physics2D.Raycast(spriteHolder.transform.position, startingLine.forward,trailDis,lay);
-            if (hit)
+            if (Mathf.Abs(shootStick.Vertical) > 0.1f || Mathf.Abs(shootStick.Horizontal) > 0.1f)
             {
-                TR.SetPosition(1, hit.point);
+                hit = Physics2D.Linecast(spriteHolder.transform.position,new Vector2(spriteHolder.transform.position.x + (shootStick.Horizontal * 10) ,spriteHolder.transform.position.y+ (shootStick.Vertical * 10)), 1 << LayerMask.NameToLayer("ground") );
+
+                
+                if (hit)
+                {
+                    TR.SetPosition(1, hit.point);
+                }
+                else
+                {
+                
+
+                TR.SetPosition(1,new Vector2( startingLine.position.x + 10*Mathf.Cos(Mathf.Deg2Rad * rb.rotation ),  startingLine.position.y + 10*Mathf.Sin(Mathf.Deg2Rad *rb.rotation)));
+
+                }
+                //TR.SetPosition(1, hit.point);
+                if (Mathf.Abs(shootStick.Vertical) > 0.5f || Mathf.Abs(shootStick.Horizontal) > 0.5f)
+                {
+                    shoot();
+                }
+            
+
             }
             else
             {
-              
-
-             TR.SetPosition(1,startingLine.position + startingLine.forward * 100);
+                TR.SetPosition(1, startingLine.position);
 
             }
-            //TR.SetPosition(1, hit.point);
-            if (Mathf.Abs(shootStick.Vertical) > 0.5f || Mathf.Abs(shootStick.Horizontal) > 0.5f)
-            {
-                shoot();
-            }
-           
-
-        }
-        else
-        {
-            TR.SetPosition(1, startingLine.position);
-
-        }
     }
-    void Update()
+    void handleShoting()
     {
         TR.positionCount = 2;
 
         rb.rotation = Mathf.Rad2Deg * Mathf.Atan2(shootStick.Vertical, shootStick.Horizontal);
-        transform.position = rbTarget.position;
+        ori.transform.position = rbTarget.position;
         if(rb.rotation > 90 || rb.rotation < -90)
         {
             SR.flipY = true;
@@ -104,13 +129,11 @@ public class shooting : MonoBehaviour
             SR.flipY = false;
 
         }
-  
-        //Instantiate(bulletPreFab,transform,)
     }
     void shoot()
     {
       
-        gunHolder.shoot( startingLine, transform);
+        gunHolder.shoot( startingLine, ori.transform);
 
             
 

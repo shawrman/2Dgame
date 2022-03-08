@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class movement : MonoBehaviour
+public class movement : NetworkBehaviour
 {
     [Header("----Movement----")]
 
@@ -10,30 +11,42 @@ public class movement : MonoBehaviour
     public float jetPackForce;
     public float speed;
     public Joystick moveStick;
-    public float limitX = 10;
+    public float limitY = 10;
 
-
-    void Start()
+    
+    void start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        
+        if(isLocalPlayer)
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+     
     }
 
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = new Vector2(moveStick.Horizontal * speed,rb.velocity.y);
-        if (rb.velocity.y < limitX)
+       if(isLocalPlayer)
+       {
+           if(!moveStick)
+           {
+            moveStick = GameObject.Find("moving").GetComponent<FloatingJoystick>();
+
+           }
+            
+
+           handleMovement();
+       }
+    }
+    void handleMovement()
+    {
+        //rb.velocity = new Vector2(moveStick.Horizontal * speed,rb.velocity.y);
+        rb.AddForce(new Vector2(moveStick.Horizontal * speed ,0 ));
+        if (rb.velocity.y < limitY)
         {
             rb.AddForce(new Vector2(0, jetPackForce * moveStick.Vertical), ForceMode2D.Force);
 
         }
-
-        //rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed,rb.velocity.y);
-        
-        if (Input.GetKey(KeyCode.DownArrow) || (moveStick.Vertical < -0.3f))
-        {
-           // rb.velocity = new Vector2(rb.velocity.x, -jetPackForce);
-        }
     }
 }
+
