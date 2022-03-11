@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class Gun : MonoBehaviour
+public class Gun : NetworkBehaviour
 {
     public Gun()
     {
@@ -51,6 +52,7 @@ public class Gun : MonoBehaviour
         
 
     }
+    [Command]
     public void shoot(Transform gunPoint,Transform ori)
     {
         
@@ -71,8 +73,7 @@ public class Gun : MonoBehaviour
             }
             else
             {
-                ReloadGun();
-                
+                ReloadGun();                
             }
          
         }

@@ -16,35 +16,56 @@ public class movement : NetworkBehaviour
     
     void start()
     {
-        if(isLocalPlayer)
-        {
-            rb = GetComponent<Rigidbody2D>();
-        }
+        
+        rb = GetComponent<Rigidbody2D>();
+      
      
     }
 
+ 
     // Update is called once per frame
+    [ClientCallback]
     void Update()
     {
-       if(isLocalPlayer)
-       {
-           if(!moveStick)
-           {
-            moveStick = GameObject.Find("moving").GetComponent<FloatingJoystick>();
+       
+        if(!moveStick)
+        {
+        moveStick = GameObject.Find("moving").GetComponent<FloatingJoystick>();
 
-           }
-            
+        }
+        
 
-           handleMovement();
-       }
+        Validate(moveStick.Direction);
+      
     }
-    void handleMovement()
+
+    [Command]
+    void Validate(Vector2 move)
     {
+        handleMovement(move);
+
+        if(isServerOnly)
+        {
+            rb.AddForce(new Vector2(move.x * speed ,0 ));
+            if (rb.velocity.y < limitY)
+            {
+                rb.AddForce(new Vector2(0, jetPackForce * move.y), ForceMode2D.Force);
+
+            }
+        }
+   
+    }
+
+    [ClientRpc]
+    void handleMovement(Vector2 moveStick)
+    {
+        
         //rb.velocity = new Vector2(moveStick.Horizontal * speed,rb.velocity.y);
-        rb.AddForce(new Vector2(moveStick.Horizontal * speed ,0 ));
+        
+        rb.AddForce(new Vector2(moveStick.x * speed ,0 ));
         if (rb.velocity.y < limitY)
         {
-            rb.AddForce(new Vector2(0, jetPackForce * moveStick.Vertical), ForceMode2D.Force);
+            rb.AddForce(new Vector2(0, jetPackForce * moveStick.y), ForceMode2D.Force);
 
         }
     }

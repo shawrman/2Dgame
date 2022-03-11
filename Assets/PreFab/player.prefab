@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 2965491193383743504}
   - component: {fileID: 3426414378996902926}
   - component: {fileID: 5763293985053472234}
-  - component: {fileID: 6743492492482530453}
+  - component: {fileID: 7634349324082974182}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -468,6 +468,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df33d16edad72e8428938de34fcd1177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!114 &5763293985053472234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +517,7 @@ MonoBehaviour:
   - 0
   - 0
   spriteHolder: {fileID: 8718269202799443316}
+  SR: {fileID: 8718269202799443314}
   shootStick: {fileID: 0}
   TR: {fileID: 8718269203197721341}
   rb: {fileID: 8718269203197721338}
@@ -523,21 +526,21 @@ MonoBehaviour:
   startingLine: {fileID: 8718269202999571351}
   GunId: 0
   trailDis: 1
---- !u!114 &6743492492482530453
+--- !u!114 &7634349324082974182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8718269204329372929}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 1
+  clientAuthority: 0
   sendInterval: 0.05
   syncPosition: 1
   syncRotation: 1
@@ -557,3 +560,4 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  target: {fileID: 8718269202799443317}

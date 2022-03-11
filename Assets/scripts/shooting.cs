@@ -14,7 +14,7 @@ public class shooting : NetworkBehaviour
     public float[] reloadTime;
     public float[] damage;
     public GameObject spriteHolder;
-    SpriteRenderer SR;
+    public SpriteRenderer SR;
 
 
 
@@ -114,22 +114,53 @@ public class shooting : NetworkBehaviour
 
             }
     }
-    void handleShoting()
-    {
-        TR.positionCount = 2;
 
-        rb.rotation = Mathf.Rad2Deg * Mathf.Atan2(shootStick.Vertical, shootStick.Horizontal);
+    [Command]
+    void CmdOriPos(Vector2 dir)
+    {
+        oriPos(dir);
+
+
         ori.transform.position = rbTarget.position;
+        rb.rotation = Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x);
+    }
+    [ClientRpc]
+    void oriPos(Vector2 dir)
+    {
+        ori.transform.position = rbTarget.position;
+        rb.rotation = Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x);
         if(rb.rotation > 90 || rb.rotation < -90)
         {
-            SR.flipY = true;
+            flipY();
         }
         else
-        {
-            SR.flipY = false;
+        { 
+            UnflipY();
 
         }
     }
+    void flipY()
+    {
+        SR.flipY = true;
+
+    }
+    void UnflipY()
+    {
+        SR.flipY = false;
+
+    }
+
+
+    [ClientCallback]
+    void handleShoting()
+    {
+        CmdOriPos(shootStick.Direction);
+        TR.positionCount = 2;
+        
+   
+    }
+
+    [Command]
     void shoot()
     {
       
