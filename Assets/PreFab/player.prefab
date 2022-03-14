@@ -155,7 +155,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8718269203197721342}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -167,7 +167,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 3
 --- !u!120 &8718269203197721341
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -209,9 +209,7 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 1, z: 0}
+  m_Positions: []
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -266,7 +264,7 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
-  m_Loop: 0
+  m_Loop: 1
 --- !u!1 &8718269204329372929
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +282,6 @@ GameObject:
   - component: {fileID: 2965491193383743504}
   - component: {fileID: 3426414378996902926}
   - component: {fileID: 5763293985053472234}
-  - component: {fileID: 7634349324082974182}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -348,7 +345,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b745f6f6369490049b6da6959d8b4317, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 90984118d013f71428cbc0ba471d5a78, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -392,7 +389,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8718269204329372929}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b295f38fafce8b640ad3114d1a2decf0, type: 3}
   m_Name: 
@@ -470,6 +467,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  _bullet: {fileID: 1853058952221454501, guid: 3472cb96bf858e04b8bdf80d898d323e, type: 3}
+  _gunObject: {fileID: 0}
+  _bulletSpeed: 0
+  _bulletsPerSeconds: 0
+  _gunSprite: {fileID: 0}
+  _magazineSize: 0
+  _reloadTime: 0
+  _damage: 0
+  canShoot: 1
 --- !u!114 &5763293985053472234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,7 +497,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   BulletSpeed:
-  - 6
+  - 1
   - 0
   - 0
   - 0
@@ -526,38 +532,3 @@ MonoBehaviour:
   startingLine: {fileID: 8718269202999571351}
   GunId: 0
   trailDis: 1
---- !u!114 &7634349324082974182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8718269204329372929}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.05
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 0
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  target: {fileID: 8718269202799443317}

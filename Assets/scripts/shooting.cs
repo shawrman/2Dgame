@@ -120,7 +120,7 @@ public class shooting : NetworkBehaviour
     {
         oriPos(dir);
 
-
+        
         ori.transform.position = rbTarget.position;
         rb.rotation = Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x);
     }
@@ -131,23 +131,13 @@ public class shooting : NetworkBehaviour
         rb.rotation = Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x);
         if(rb.rotation > 90 || rb.rotation < -90)
         {
-            flipY();
+            SR.flipY = true;
         }
         else
         { 
-            UnflipY();
+            SR.flipY = false;
 
         }
-    }
-    void flipY()
-    {
-        SR.flipY = true;
-
-    }
-    void UnflipY()
-    {
-        SR.flipY = false;
-
     }
 
 
@@ -160,11 +150,11 @@ public class shooting : NetworkBehaviour
    
     }
 
-    [Command]
+    
     void shoot()
     {
       
-        gunHolder.shoot( startingLine, ori.transform);
+        gunHolder.prepShot( startingLine.position ,startingLine.up, ori.transform.rotation);
 
             
 

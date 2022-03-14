@@ -3,6 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+
+public struct GunStruct
+{
+    public GameObject _bullet;//done
+    GameObject _gunObject;
+    float _bulletSpeed;//done
+    int _bulletsPerSeconds;//done
+    Sprite _gunSprite;//need to do
+    int _magazineSize;
+    float _reloadTime;
+    float _damage;
+    bool canShoot;
+
+   
+    public GunStruct(Gun gun)
+    {
+        _bullet = gun._bullet;
+        _gunObject = gun._gunObject;
+        _bulletSpeed = gun._bulletSpeed;
+        _bulletsPerSeconds = gun._bulletsPerSeconds;
+        _gunSprite =gun._gunSprite;
+        _magazineSize = gun._magazineSize;
+        _reloadTime = gun._reloadTime;
+        _damage = gun._damage;
+        canShoot = gun.canShoot;
+         
+    }
+
+}
 public class Gun : NetworkBehaviour
 {
     public Gun()
@@ -24,15 +53,15 @@ public class Gun : NetworkBehaviour
 
     }
    
-    GameObject _bullet;//done
-    GameObject _gunObject;
-    float _bulletSpeed;//done
-    int _bulletsPerSeconds;//done
-    Sprite _gunSprite;//need to do
-    int _magazineSize;
-    float _reloadTime;
-    float _damage;
-    bool canShoot = true;
+    public GameObject _bullet;//done
+    public GameObject _gunObject;
+    public float _bulletSpeed;//done
+    public int _bulletsPerSeconds;//done
+    public Sprite _gunSprite;//need to do
+    public int _magazineSize;
+    public float _reloadTime;
+    public float _damage;
+    public bool canShoot = true;
 
     int magazine;
   
@@ -52,20 +81,21 @@ public class Gun : NetworkBehaviour
         
 
     }
-    [Command]
-    public void shoot(Transform gunPoint,Transform ori)
+
+    public void prepShot(Vector3 gunPoint ,Vector3 gunPointUp ,Quaternion ori)
     {
+          if(canShoot)
+        {  
+            //Debug.Log(_bullet);
         
-        if(canShoot)
-        {   
+              
             canShoot = false;
 
             if(magazine > 0)
-            {
-                GameObject bullet = Instantiate(_bullet, gunPoint.position, ori.rotation);
-                Rigidbody2D BRB = bullet.GetComponent<Rigidbody2D>();
-                BRB.AddForce(gunPoint.up * _bulletSpeed, ForceMode2D.Impulse);
-               
+            {   
+                
+                notifyAll( gunPoint,gunPointUp, ori,_bulletSpeed);
+                
                 Invoke("ableToShoot",(float)1 / _bulletsPerSeconds);
                 //Debug.Log(1 / _bulletsPerSeconds);
                
@@ -75,18 +105,33 @@ public class Gun : NetworkBehaviour
             {
                 ReloadGun();                
             }
-         
+             
         }
+    }
+    [Command]
+    void notifyAll(Vector3 gunPoint ,Vector3 gunPointUp ,Quaternion ori,float bp)
+    {
+        shoot( gunPoint,gunPointUp, ori,bp);
+
+    }
+    [ClientRpc]
+    public void shoot(Vector3 gunPoint ,Vector3 gunPointUp ,Quaternion ori,float bp)
+    {
       
+      
+       GameObject bullet = Instantiate(_bullet, gunPoint,  ori );
+        
+        Rigidbody2D BRB = bullet.GetComponent<Rigidbody2D>();
+        BRB.AddForce(gunPointUp * bp, ForceMode2D.Impulse);
+        //NetworkServer.Spawn(bullet);
 
     }
 
     IEnumerator rotateObject(GameObject gameObjectToMove, float duration)
     {
+        
 
-
-        Quaternion currentRot = gameObjectToMove.transform.localRotation;
-
+       
         float counter = 0;
         while (counter < duration)
         {
@@ -100,6 +145,7 @@ public class Gun : NetworkBehaviour
         canShoot = true;
 
     }  
+    //void cmdRotate(GameObject)
 
 
 
