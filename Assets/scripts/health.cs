@@ -10,5 +10,9 @@ public class health : MonoBehaviour
     public void damageTaken(float damgae)
     {
         _health -= damgae;
+        if(_health < 0)
+        {
+            this.gameObject.transform.position = new Vector3(2,2,2);
+        }
     } 
 }

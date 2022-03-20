@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8718269202799443316}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: -0.18, z: 0}
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_Children: []
   m_Father: {fileID: 8718269203197721343}
@@ -122,7 +122,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8718269203197721343}
-  - component: {fileID: 8718269203197721338}
   - component: {fileID: 8718269203197721341}
   m_Layer: 2
   m_Name: ori
@@ -147,27 +146,6 @@ Transform:
   m_Father: {fileID: 8718269204329372942}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &8718269203197721338
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8718269203197721342}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 3
 --- !u!120 &8718269203197721341
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -280,8 +258,8 @@ GameObject:
   - component: {fileID: 8718269204329372938}
   - component: {fileID: 8718269204329372941}
   - component: {fileID: 2965491193383743504}
-  - component: {fileID: 3426414378996902926}
   - component: {fileID: 5763293985053472234}
+  - component: {fileID: 5912322709922781322}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -453,29 +431,6 @@ MonoBehaviour:
   visible: 0
   m_AssetId: b7b81c49fec710849b12c817112f2910
   hasSpawned: 0
---- !u!114 &3426414378996902926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8718269204329372929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df33d16edad72e8428938de34fcd1177, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  _bullet: {fileID: 1853058952221454501, guid: 3472cb96bf858e04b8bdf80d898d323e, type: 3}
-  _gunObject: {fileID: 0}
-  _bulletSpeed: 0
-  _bulletsPerSeconds: 0
-  _gunSprite: {fileID: 0}
-  _magazineSize: 0
-  _reloadTime: 0
-  _damage: 0
-  canShoot: 1
 --- !u!114 &5763293985053472234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +459,7 @@ MonoBehaviour:
   - 0
   BulletsPerSeconds: 0a00000000000000000000000000000000000000
   gunSprite:
-  - {fileID: 21300000, guid: 659017fe4ed4c2848bfd8c68abd7c09f, type: 3}
+  - {fileID: 21300000, guid: 4f34dc1f1a3de8b419b5caafc2de7c3e, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -525,10 +480,43 @@ MonoBehaviour:
   spriteHolder: {fileID: 8718269202799443316}
   SR: {fileID: 8718269202799443314}
   shootStick: {fileID: 0}
-  TR: {fileID: 8718269203197721341}
-  rb: {fileID: 8718269203197721338}
-  rbTarget: {fileID: 8718269204329372942}
+  rbTarget: {fileID: 8718269203197721343}
   ori: {fileID: 8718269203197721342}
   startingLine: {fileID: 8718269202999571351}
   GunId: 0
   trailDis: 1
+--- !u!114 &5912322709922781322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8718269204329372929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 734b48bea0b204338958ee3d885e11f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  sendInterval: 0.05
+  syncPosition: 0
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 5
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  target: {fileID: 8718269203197721343}

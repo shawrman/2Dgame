@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 
 
-public struct GunStruct
+public struct GunStrudct
 {
     public GameObject _bullet;//done
     GameObject _gunObject;
@@ -17,20 +17,7 @@ public struct GunStruct
     bool canShoot;
 
    
-    public GunStruct(Gun gun)
-    {
-        _bullet = gun._bullet;
-        _gunObject = gun._gunObject;
-        _bulletSpeed = gun._bulletSpeed;
-        _bulletsPerSeconds = gun._bulletsPerSeconds;
-        _gunSprite =gun._gunSprite;
-        _magazineSize = gun._magazineSize;
-        _reloadTime = gun._reloadTime;
-        _damage = gun._damage;
-        canShoot = gun.canShoot;
-         
-    }
-
+    
 }
 public class Gun : NetworkBehaviour
 {
